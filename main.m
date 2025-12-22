@@ -14,8 +14,8 @@ q = [pi/2, -pi/4, 0, -pi/4, 0, 0.15, pi/4]';
 
 %% Define the tool frame rigidly attached to the end-effector
 % Tool frame definition
-gamma = [pi/10, 0 , pi/6];
-eRt = YPRtoRot(gamma(1),gamma(2),gamma(3)); 
+gamma_t = [pi/10, 0 , pi/6];
+eRt = YPRtoRot(gamma_t(1),gamma_t(2),gamma_t(3)); 
 e_r_te = [0.3, 0.1, 0]';
 
 eTt = [eRt, e_r_te;
@@ -45,10 +45,12 @@ disp(bTt);
 
 %% Define the goal frame and initialize cartesian control
 % Goal definition 
-bOg = [0.2; -0.7; 0.3]';
-gamma = [0, 1.57, 0];
-bRg = YPRtoRot(gamma(1),gamma(2), gamma(3));
-bTg = [bRg bOg;0 0 0 1];
+bOg = [0.2, -0.7, 0.3]';
+gamma_g = [0, 1.57, 0];
+bRg = YPRtoRot(gamma_g(1),gamma_g(2), gamma_g(3));
+
+bTg = [bRg, bOg;
+    0 ,0, 0, 1];
 
 disp('bTg')
 disp(bTg)
@@ -59,6 +61,11 @@ k_l = 0.8;
 
 % Cartesian control initialization
 cc = cartesianControl(gm, k_a, k_l);
+
+
+
+
+
 
 %% Initialize control loop 
 
@@ -79,24 +86,32 @@ qmin(6) = 0;
 qmax = +3.14 * ones(7,1);
 qmax(6) = 1;
 
+%%
 show_simulation = true;
 pm = plotManipulators(show_simulation);
 pm.initMotionPlot(t, bTg(1:3,4));
 
+
 %%%%%%% Kinematic Simulation %%%%%%%
 for i = t
+    
     % Updating transformation matrices for the new configuration 
-
+    for j = 1:gm.jointNumber
+       bTi(:,:,j) = gm.getTransformWrtBase(j);
+    end
+    gm = geometricModel(bTi, jointType,eTt);
+    gm.updateDirectGeometry(q);
     % Get the cartesian error given an input goal frame
-
+    x_dot = cc.getCartesianReference(bTg); %non aggiorno bTg perche il goal è fermo
     % Update the jacobian matrix of the given model
+    km.updateJacobian();
 
     %% INVERSE KINEMATICS
     % Compute desired joint velocities 
-    q_dot = ...
+    q_dot =  pinv(km.J)* x_dot;
 
     % simulating the robot
-    q = KinematicSimulation(....);
+    q = KinematicSimulation(q,q_dot, dt, qmin, qmax );
     
     pm.plotIter(gm, km, i, q_dot);
 

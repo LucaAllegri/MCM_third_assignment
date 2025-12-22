@@ -39,16 +39,14 @@ classdef cartesianControl < handle
             bRg = bTg(1:3,1:3);
             Rtot = bRt'*bRg; % cambia l'ordine
             [h, theta] = RotToAngleAxis(Rtot);
-            e = [h*theta; r];
-            disp("e")
-            disp(e);
+            e = [h*theta, r];
             
-            Ka = self.k_a * eye(3);
-            Kl = self.k_l * eye(3);
+            Ka = self.ka * eye(3);
+            Kl = self.kl * eye(3);
             K = [Ka, zeros(3,3);
-                 zeros(3,3), Kl];
+                 zeros(3,3), Kl]
             
-            x_dot = K * e; % Compute the control output
+            x_dot = K * e'; % Compute the control output
 
             
         end
