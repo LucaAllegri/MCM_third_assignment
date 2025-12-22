@@ -46,19 +46,17 @@ disp(bTt);
 %% Define the goal frame and initialize cartesian control
 % Goal definition 
 bOg = [0.2; -0.7; 0.3]';
-gamma = [0, 1.57, 0];
-bRg = YPRtoRot(gamma(1),gamma(2), gamma(3));
+bRg = YPRtoRot(bOg(1),bOg(2))
 bTg = [bRg bOg;0 0 0 1];
-
 disp('bTg')
 disp(bTg)
 
 % control proportional gain 
-k_a = 0.8;
-k_l = 0.8;
+k_a = ...
+k_l = ...
 
 % Cartesian control initialization
-cc = cartesianControl(gm, k_a, k_l);
+cc = cartesianControl(....);
 
 %% Initialize control loop 
 

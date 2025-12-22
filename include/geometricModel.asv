@@ -95,17 +95,17 @@ classdef geometricModel < handle
 
     methods
         % Constructor to initialize the geomModel property
-        % function self = geometricModel(iTj_0,jointType)
-        %     if nargin > 1
-        %         self.iTj_0 = iTj_0;
-        %         self.iTj = iTj_0;
-        %         self.jointType = jointType;
-        %         self.jointNumber = length(jointType);
-        %         self.q = zeros(self.jointNumber,1);
-        %     else
-        %         error('Not enough input arguments (iTj_0) (jointType)')
-        %     end
-        % end
+        function self = geometricModel(iTj_0,jointType)
+            if nargin > 1
+                self.iTj_0 = iTj_0;
+                self.iTj = iTj_0;
+                self.jointType = jointType;
+                self.jointNumber = length(jointType);
+                self.q = zeros(self.jointNumber,1);
+            else
+                error('Not enough input arguments (iTj_0) (jointType)')
+            end
+        end
 
         function self = geometricModel(iTj_0,jointType,eTt)
             if nargin > 1
@@ -177,9 +177,9 @@ classdef geometricModel < handle
             % bTt : transformation matrix from the manipulator base to the
             % tool
 
-            T_0_e = self.getTransformWrtBase(length(self.jointType));
+            T_0_e = getTransformWrtBase(self.jointNumber);
 
-            bTt = T_0_e * self.eTt;
+
 
             %TO DO
         end
