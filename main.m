@@ -96,10 +96,6 @@ pm.initMotionPlot(t, bTg(1:3,4));
 for i = t
     
     % Updating transformation matrices for the new configuration 
-    for j = 1:gm.jointNumber
-       bTi(:,:,j) = gm.getTransformWrtBase(j);
-    end
-    gm = geometricModel(bTi, jointType,eTt);
     gm.updateDirectGeometry(q);
     % Get the cartesian error given an input goal frame
     x_dot = cc.getCartesianReference(bTg); %non aggiorno bTg perche il goal è fermo

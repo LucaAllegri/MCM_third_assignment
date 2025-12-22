@@ -37,8 +37,8 @@ classdef cartesianControl < handle
             %% errore sull'angolo test
             bRt = T_b_t(1:3,1:3);
             bRg = bTg(1:3,1:3);
-            Rtot = bRt'*bRg; % cambia l'ordine
-            [h, theta] = RotToAngleAxis(Rtot);
+            Rerr = bRg*bRt'; % cambia l'ordine
+            [h, theta] = RotToAngleAxis(Rerr);
             e = [h*theta; r];
             disp("e")
             disp(e);
