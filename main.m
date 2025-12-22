@@ -91,10 +91,12 @@ show_simulation = true;
 pm = plotManipulators(show_simulation);
 pm.initMotionPlot(t, bTg(1:3,4));
 
+counter = 0;
+
 
 %%%%%%% Kinematic Simulation %%%%%%%
 for i = t
-    
+    counter = counter +1;
     % Updating transformation matrices for the new configuration 
     gm.updateDirectGeometry(q);
     % Get the cartesian error given an input goal frame
@@ -119,3 +121,29 @@ for i = t
 end
 
 pm.plotFinalConfig(gm);
+
+%%
+%Testing
+gm = geometricModel(iTj_0,jointType,eTt);
+gm.updateDirectGeometry(q); %final configuration
+T = gm.getToolTransformWrtBase();
+
+ep = bTg(1:3,4) - T(1:3,4);
+Rerr = bTg(1:3,1:3) * T(1:3,1:3)';
+[h, theta] = RotToAngleAxis(Rerr);
+eo = h * theta;
+
+disp('Position error norm:')
+disp(norm(ep))
+
+disp('Orientation error norm:')
+disp(norm(eo))
+disp("Final T");
+disp(T);
+
+bTg = [bRg, bOg;
+    0 ,0, 0, 1];
+disp("Desired T");
+disp(bTg);
+
+
