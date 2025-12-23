@@ -115,13 +115,15 @@ classdef kinematicModel < handle
 
             b_r_et = bRe * r_et;
 
-            b_r_et_skew = skew(b_r_et);
-
+            b_r_et_skew = skew();
 
             B = [eye(3) , zeros(3,3);
-                 b_r_et_skew' ,eye(3)]
+                        ,    eye(3)]
 
-            self.J = B * bJe;
+
+
+            self.J = J_n_0;
+
             
             
         end

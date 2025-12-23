@@ -151,30 +151,32 @@ disp(bTg);
 %% Q2.5
 
 
-V_tb = km.J*q_dot;
+geometricModel.updateDirectGeometry(q);
+km = kinematicModel(geometricModel);
 
-bTt = gm.getToolTransformWrtBase();
+km.updateJacobian();
 
-bTe = gm.getTransformWrtBase(length(q));
+V_t0 = km.J*q_dot;
 
-bJe = km.getJacobianOfLinkWrtBase(length(q));
+o_w_t0 = V_t0(1:3);
+o_v_t0 = V_t0(4:6);
 
-V_eb = bJe*q_dot;
+bTt = geometricModel.
 
-o_w_tb = V_tb(1:3);
-o_v_tb = V_tb(4:6);
+T_0_e = geometricModel.getTransformWrtBase(length(q));
 
-o_w_eb = V_eb(1:3);
-o_v_eb = V_eb(4:6);
+
+
+R_0_e = T_0_e(1:3, 1:3);
+r_0_e = T_0_e(1:3, 4);
+r_0_e_skew = skew(r_0_e);
+
+e_w_e0 = R_0_e'*o_w_e0;
+e_v_e0 = (R_0_e' * r_0_e_skew' * o_w_e0) + (R_0_e' * o_v_e0);
+
 
 disp('End-effector angular velocity :');
-disp(o_w_tb);
+disp(e_w_e0);
 disp('End-effector linear velocity:');
-disp(o_v_tb);
-
-disp('Tool angular velocity :');
-disp(o_w_eb);
-disp('Tool linear velocity:');
-disp(o_v_eb);
-
+disp(e_v_e0);
 
