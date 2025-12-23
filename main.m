@@ -70,9 +70,9 @@ cc = cartesianControl(gm, k_a, k_l);
 %% Initialize control loop 
 
 % Simulation variables
-samples = 150;
+samples = 100;
 t_start = 0.0;
-t_end = 10.0;
+t_end = 20.0;
 dt = (t_end-t_start)/samples;
 t = t_start:dt:t_end; 
 
