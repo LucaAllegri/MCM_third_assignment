@@ -86,7 +86,7 @@ classdef plotManipulators < handle
             self.x_dot_hist = [self.x_dot_hist; (x_dot_actual/norm(x_dot_actual))']; % direction tool
             self.t_hist = [self.t_hist; i];
 
-            
+            sel
 
             %%PARTE NOSTRA  
             V_tb = km.J*q_dot; %tool
@@ -96,9 +96,6 @@ classdef plotManipulators < handle
             bJe = km.getJacobianOfLinkWrtBase(length(gm.jointType)); %ee
             V_eb = bJe*q_dot;
             self.x_dot_ee = [self.x_dot_ee; (V_eb)'];
-
-            self.x_dir_ee = [self.x_dir_ee; (V_eb/norm(V_eb))']; % direction ee
-
            
         end
 
@@ -128,7 +125,7 @@ classdef plotManipulators < handle
             
             figure
             hold on
-            title('DIRECTION OF THE TOOL VELOCITIES')
+            title('DIRECTION OF THE END-EFFECTOR VELOCITIES')
             % subplot(1, 3, 1)
             plot(self.t_hist, self.x_dot_hist)
             legend('omega x', 'omega y', 'omega z', 'xdot', 'ydot', 'zdot')
@@ -139,9 +136,9 @@ classdef plotManipulators < handle
 
             figure
             hold on
-            title('DIRECTION OF END-EFFECTOR VELOCITIES')
+            title('DIRECTION OF THE END-EFFECTOR VELOCITIES')
             % subplot(1, 3, 1)
-            plot(self.t_hist, self.x_dir_ee)
+            plot(self.t_hist, self.x_dot_hist)
             legend('omega x', 'omega y', 'omega z', 'xdot', 'ydot', 'zdot')
 
             figure

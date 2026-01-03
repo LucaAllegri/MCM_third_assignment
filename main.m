@@ -45,7 +45,7 @@ disp(bTt);
 
 %% Define the goal frame and initialize cartesian control
 % Goal definition 
-bOg = [0.2, -0.7, 0.3]';
+bOg = [0.2, -0.8, 0.3]';
 gamma_g = [0, 1.57, 0];
 bRg = YPRtoRot(gamma_g(1),gamma_g(2), gamma_g(3));
 
@@ -72,7 +72,7 @@ cc = cartesianControl(gm, k_a, k_l);
 % Simulation variables
 samples = 100;
 t_start = 0.0;
-t_end = 20.0;
+t_end = 10.0;
 dt = (t_end-t_start)/samples;
 t = t_start:dt:t_end; 
 
@@ -91,12 +91,11 @@ show_simulation = true;
 pm = plotManipulators(show_simulation);
 pm.initMotionPlot(t, bTg(1:3,4));
 
-counter = 0;
 
 
 %%%%%%% Kinematic Simulation %%%%%%%
 for i = t
-    counter = counter +1;
+    
     % Updating transformation matrices for the new configuration 
     gm.updateDirectGeometry(q);
     % Get the cartesian error given an input goal frame
@@ -124,29 +123,34 @@ end
 
 pm.plotFinalConfig(gm);
 
+
+
 %%
 %Testing
-gm = geometricModel(iTj_0,jointType,eTt);
-gm.updateDirectGeometry(q); %final configuration
-T = gm.getToolTransformWrtBase();
+% gm = geometricModel(iTj_0,jointType,eTt);
+% gm.updateDirectGeometry(q); %final configuration
+% T = gm.getToolTransformWrtBase();
+% 
+% ep = bTg(1:3,4) - T(1:3,4);
+% Rerr = bTg(1:3,1:3) * T(1:3,1:3)';
+% [h, theta] = RotToAngleAxis(Rerr);
+% eo = h * theta;
+% 
+% disp('Position error norm:')
+%% 
+% disp(norm(ep))
+% 
+% disp('Orientation error norm:')
+% disp(norm(eo))
+% disp("Final T");
+% disp(T);
+% 
+% bTg = [bRg, bOg;
+%     0 ,0, 0, 1];
+% disp("Desired T");
+% disp(bTg);
 
-ep = bTg(1:3,4) - T(1:3,4);
-Rerr = bTg(1:3,1:3) * T(1:3,1:3)';
-[h, theta] = RotToAngleAxis(Rerr);
-eo = h * theta;
 
-disp('Position error norm:')
-disp(norm(ep))
-
-disp('Orientation error norm:')
-disp(norm(eo))
-disp("Final T");
-disp(T);
-
-bTg = [bRg, bOg;
-    0 ,0, 0, 1];
-disp("Desired T");
-disp(bTg);
 
 %% Q2.5
 
