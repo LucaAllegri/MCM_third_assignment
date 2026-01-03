@@ -129,32 +129,26 @@ classdef plotManipulators < handle
             figure
             hold on
             title('DIRECTION OF THE TOOL VELOCITIES')
-            % subplot(1, 3, 1)
             plot(self.t_hist, self.x_dot_hist)
             legend('omega x', 'omega y', 'omega z', 'xdot', 'ydot', 'zdot')
-
-
             
             %%aggiunta noi
 
             figure
             hold on
             title('DIRECTION OF END-EFFECTOR VELOCITIES')
-            % subplot(1, 3, 1)
             plot(self.t_hist, self.x_dir_ee)
             legend('omega x', 'omega y', 'omega z', 'xdot', 'ydot', 'zdot')
 
             figure
             hold on
             title('TOOL VELOCITIES')
-            % subplot(1, 3, 2)
             plot(self.t_hist, self.x_dot_tool)
             legend('omega x', 'omega y', 'omega z', 'xdot', 'ydot', 'zdot')
 
             figure
             hold on
-            title('EE VELOCITIES')
-            % subplot(1, 3, 3)
+            title('END-EFFECTOR VELOCITIES')
             plot(self.t_hist, self.x_dot_ee)
             legend('omega x', 'omega y', 'omega z', 'xdot', 'ydot', 'zdot')
         end

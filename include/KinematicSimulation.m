@@ -10,7 +10,7 @@
 % Outputs
 % - q new joint configuration
 function [q_new] = KinematicSimulation(q,q_dot, dt, q_min, q_max)
-    n = size(q,1)
+    n = size(q,1);
     q_new = zeros(n, 1); % Initialize new joint configuration
     qi = q + q_dot * dt;
     for i=1:n
