@@ -3,12 +3,13 @@
 % Inputs
 % - q current robot configuration
 % - q_dot joints velocity
-% - ts sample time
+% - dt sample time
 % - q_min lower joints bound
 % - q_max upper joints bound
 %
 % Outputs
 % - q new joint configuration
+
 function [q_new] = KinematicSimulation(q,q_dot, dt, q_min, q_max)
     n = size(q,1);
     q_new = zeros(n, 1); % Initialize new joint configuration

@@ -86,8 +86,6 @@ classdef plotManipulators < handle
             self.x_dot_hist = [self.x_dot_hist; (x_dot_actual/norm(x_dot_actual))']; % direction tool
             self.t_hist = [self.t_hist; i];
 
-            
-
             %%PARTE NOSTRA  
             V_tb = km.J*q_dot; %tool
             self.x_dot_tool = [self.x_dot_tool; (V_tb)'];

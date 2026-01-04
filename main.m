@@ -38,8 +38,6 @@ km = kinematicModel(gm);
 
 bTt = gm.getToolTransformWrtBase();
 
-disp("eTt");
-disp(eTt);
 disp('bTt q = 0');
 disp(bTt);
 
@@ -52,8 +50,8 @@ bRg = YPRtoRot(gamma_g(1),gamma_g(2), gamma_g(3));
 bTg = [bRg, bOg;
     0 ,0, 0, 1];
 
-disp('bTg')
-disp(bTg)
+disp('bTg');
+disp(bTg);
 
 % control proportional gain 
 k_a = 0.8;
@@ -61,10 +59,6 @@ k_l = 0.8;
 
 % Cartesian control initialization
 cc = cartesianControl(gm, k_a, k_l);
-
-
-
-
 
 
 %% Initialize control loop 
@@ -122,34 +116,6 @@ for i = t
 end
 
 pm.plotFinalConfig(gm);
-
-
-
-%%
-%Testing
-% gm = geometricModel(iTj_0,jointType,eTt);
-% gm.updateDirectGeometry(q); %final configuration
-% T = gm.getToolTransformWrtBase();
-% 
-% ep = bTg(1:3,4) - T(1:3,4);
-% Rerr = bTg(1:3,1:3) * T(1:3,1:3)';
-% [h, theta] = RotToAngleAxis(Rerr);
-% eo = h * theta;
-% 
-% disp('Position error norm:')
-%% 
-% disp(norm(ep))
-% 
-% disp('Orientation error norm:')
-% disp(norm(eo))
-% disp("Final T");
-% disp(T);
-% 
-% bTg = [bRg, bOg;
-%     0 ,0, 0, 1];
-% disp("Desired T");
-% disp(bTg);
-
 
 
 %% Q2.5
