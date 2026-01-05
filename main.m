@@ -137,14 +137,14 @@ o_v_tb = V_tb(4:6);
 o_w_eb = V_eb(1:3);
 o_v_eb = V_eb(4:6);
 
-disp('End-effector angular velocity :');
+disp('Tool angular velocity :');
 disp(o_w_tb);
-disp('End-effector linear velocity:');
+disp('Tool linear velocity:');
 disp(o_v_tb);
 
-disp('Tool angular velocity :');
+disp('End-effector angular velocity :');
 disp(o_w_eb);
-disp('Tool linear velocity:');
+disp('End-effector linear velocity:');
 disp(o_v_eb);
 
 
