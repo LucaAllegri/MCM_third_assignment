@@ -33,9 +33,13 @@ classdef cartesianControl < handle
            
             bRt = T_b_t(1:3,1:3);
             bRg = bTg(1:3,1:3);
-            Rerr = bRg * bRt'; 
-            [h, theta] = RotToAngleAxis(Rerr);
-            e = [h*theta; r];
+            tRg = bRt'*bRg;
+
+            [h, theta] = RotToAngleAxis(tRg);
+            rho_t = h*theta;
+            rho_b = bRt * rho_t;
+
+            e = [rho_b; r];
             disp("e")
             disp(e);
 
